@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app="placeOrder">
+<head>
+    <script src="angular.min.js"></script>
+    <title></title>
+</head>
+<body ng-controller="OrderController">
+<div>
+    <div id = "selectItem">
+        <!--code for selecting item-->
+        <span>Select New Item</span>
+    </div>
+    <div id = "enterLocation">
+        <!--code for entering/selecting delivery location-->
+    </div>
+    <div id = "displayTotal">
+        <!--code for displaying total-->
+    </div>
+</div>
+</body>
+<script>
+    var orderingModule = angular.module('placeOrder', []);
+
+    orderingModule.controller('OrderController', ["$scope",function ($scope) {
+
+        //JavaScript code here
+
+    }]);
+</script>
+</html>

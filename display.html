@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>AngularJS Routes example</title>
+    <script src="angular.min.js"></script>
+    <script src="angular-route.min.js"></script>
+</head>
+<body ng-app="myApp">
+<div ng-controller="RouteController">
+    <a href="#/route1/abcd/test">Route 1</a><br/>
+    <a href="#/route2/1234/drive">Route 2</a><br/>
+    <div ng-view></div>
+</div>
+<script src="route.js">
+</script>
+</body>
+</html>
