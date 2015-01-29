@@ -1,5 +1,5 @@
 /**
- * Created by namitamalik on 29/1/15.
+ * Created by Namita Malik on 29/1/15.
  */
 var module = angular.module("myApp", ['ngRoute']);
 
