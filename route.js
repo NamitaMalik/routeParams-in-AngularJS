@@ -6,22 +6,20 @@ var module = angular.module("myApp", ['ngRoute']);
 module.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
-            when('/route1/:param/:text', {
+            when('/route1/:param1/:param2', {
                 templateUrl: 'route1.html',
-                controller: 'RouteController'
+                controller: 'RoutingController'
             }).
-            when('/route2/:param/:text', {
+            when('/route2/:param1/:param2', {
                 templateUrl: 'route2.html',
-                controller: 'RouteController'
+                controller: 'RoutingController'
             }).
             otherwise({
                 redirectTo: '/'
             });
     }]);
 
-module.controller("RouteController", function($scope, $routeParams) {
-    $scope.param = $routeParams.param;
-    $scope.nextParam = $routeParams.text;
-    console.log($scope.param);
-    console.log($scope.nextParam);
+module.controller("RoutingController", function($scope, $routeParams) {
+    $scope.param1 = $routeParams.param1;
+    $scope.param2 = $routeParams.param2;
 });
