@@ -37,20 +37,110 @@ module.controller("RoutingController", function($scope,$location) {
 In the above code, we have extracted the url using ```$location.path()```. We have then split this path on the basis of separator '/'. We know that ```split()``` method returns an array of strings split using the separator ('/' in this case) and this array has been stored in a variable named as ```url```.
 We have then simply stored the parameters of url in ```$scope.firstParameter``` and ```$scope.secondParameter``` variables.
 
-But, this is a bad practice, since we have hardcoded the index in order to get the parameters.
+But, this is a bad practice and perhaps an ugly way, since we have hardcoded the index in order to get the parameters.
 
 And also when we have better solution to extract parameters so this way doesn't makes sense at all.
 
 Now, let's see that better solution:
 
-2. Using **$routeParams**
+2. Using **$routeParams** service
 
+**$routeParams** service allows us to retrieve **route parameters**.
 
+The **$routeParams** is a combination of $location's search() and path(). We can get the route path using the **path()** method of the $location service whereas **search()** method of **$location** service returns an object of search part of the url. The path parameters are extracted when the $route path is matched. If there is a parameter name collision, path params take precedence over search params.
 
+> Note : routeParams will only work when ngRoute module is installed. It provides routing and deep linking services and directives for angular apps.
 
+ Now, let's see a working demo:
 
+ ```JavaScript
+ var module = angular.module("myApp", ['ngRoute']);
+ module.config(['$routeProvider',
+     function($routeProvider) {
+         $routeProvider.
+             when('/route1/:param1/:param2', {
+                 templateUrl: 'route1.html',
+                 controller: 'RoutingController'
+             }).
+             when('/route2/:param1/:param2', {
+                 templateUrl: 'route2.html',
+                 controller: 'RoutingController'
+             }).
+             otherwise({
+                 redirectTo: '/'
+             });
+     }]);
+ module.controller("RoutingController", function($scope, $routeParams) {
+     $scope.param1 = $routeParams.param1;
+     $scope.param2 = $routeParams.param2;
+ });
+ ```
+In the above demo, we have injected $routeParams to our controller ```RoutingController``` and then we have simply done ```$routeParams.param1``` and ```$routeParams.param2``` to extract our first and second parameters respectively. $routeParams get updated only after a route change gets completed successfully.
 
+I have collated both the ways in a single js(route.js) which looks like:
 
-$route is a service in AngularJS which is used for linking URLs to controllers and views.
+```JavaScript
+var module = angular.module("myApp", ['ngRoute']);
+module.config(['$routeProvider',
+    function($routeProvider) {
+        $routeProvider.
+            when('/route1/:param1/:param2', {
+                templateUrl: 'route1.html',
+                controller: 'RoutingController'
+            }).
+            when('/route2/:param1/:param2', {
+                templateUrl: 'route2.html',
+                controller: 'RoutingController'
+            }).
+            otherwise({
+                redirectTo: '/'
+            });
+    }]);
+module.controller("RoutingController", function($scope, $routeParams,$location) {
+    //using $location service
+    var url =$location.path().split('/');
+    $scope.firstParameter = url[2];
+    $scope.secondParameter = url[3];
+    //using $routeParams
+    $scope.param1 = $routeParams.param1;
+    $scope.param2 = $routeParams.param2;
+});
+```
+For much clearer understanding, I have shown these **parameters** on our **HTML**. This is a small **HTML** code:
 
-It watches $location.url() and tries to map the path to an existing route definition.
+```HTML
+<!DOCTYPE html>
+<html>
+<body>
+<div>
+    <h1>Using $location Service</h1>
+    <label>First Parameter</label>
+    <br/>
+    <br/>
+    {{firstParameter}}
+    <br/>
+    <br/>
+    <label>Second Parameter</label>
+    <br/>
+    <br/>
+    {{secondParameter}}
+    <br/>
+    <br/>
+    <h1>Using $routeParams</h1>
+    <label>First Parameter</label>
+    <br/>
+    <br/>
+    {{param1}}
+    <br/>
+    <br/>
+    <label>Second Parameter</label>
+    <br/>
+    <br/>
+    {{param2}}
+</div>
+</body>
+</html>
+```
+You can have a look at the full working source code here.
+
+It is important to note that there are many ways of doing one thing, it all depends on the requirements of the project. :)
