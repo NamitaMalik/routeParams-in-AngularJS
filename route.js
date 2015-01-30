@@ -18,8 +18,12 @@ module.config(['$routeProvider',
                 redirectTo: '/'
             });
     }]);
-
-module.controller("RoutingController", function($scope, $routeParams) {
+module.controller("RoutingController", function($scope, $routeParams,$location) {
+    //using $location service
+    var url =$location.path().split('/');
+    $scope.firstParameter = url[2];
+    $scope.secondParameter = url[3];
+    //using $routeParams
     $scope.param1 = $routeParams.param1;
     $scope.param2 = $routeParams.param2;
 });
