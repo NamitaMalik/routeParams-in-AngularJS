@@ -37,9 +37,9 @@ module.controller("RoutingController", function($scope,$location) {
 In the above code, we have extracted the url using ```$location.path()```. We have then split this path on the basis of separator '/'. We know that ```split()``` method returns an array of strings split using the separator ('/' in this case) and this array has been stored in a variable named as ```url```.
 We have then simply stored the parameters of url in ```$scope.firstParameter``` and ```$scope.secondParameter``` variables.
 
-But, this is a bad practice and perhaps an ugly way, since we have hardcoded the index in order to get the parameters.
+But, this is not a good practice and perhaps an ugly way, since we have hardcoded the index in order to get the parameters.
 
-And also when we have better solution to extract parameters so this way doesn't makes sense at all.
+And also when we have better solution to extract parameters so this way doesn't makes sense at all. But one benefit of **$location** service is that it can be used even when **$routeProvider** is not used.
 
 Now, let's see that better solution:
 
@@ -49,7 +49,7 @@ Now, let's see that better solution:
 
 The **$routeParams** is a combination of $location's search() and path(). We can get the route path using the **path()** method of the $location service whereas **search()** method of **$location** service returns an object of search part of the url. The path parameters are extracted when the $route path is matched. If there is a parameter name collision, path params take precedence over search params.
 
-> Note : routeParams will only work when ngRoute module is installed. It provides routing and deep linking services and directives for angular apps.
+> Note : routeParams will only work when ngRoute module is installed. It provides routing and deep linking services and directives for angular apps. Another important thing to note is that **$routeParam** will only work when **$routeProvider** is used.
 
  Now, let's see a working demo:
 
