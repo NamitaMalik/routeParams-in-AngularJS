@@ -6,15 +6,15 @@ var module = angular.module("myApp", ['ngRoute']);
 module.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
         .when('/route1/:param1/:param2', {
-            templateUrl: 'route.html',
+            templateUrl: 'route1.html',
             controller: 'RoutingController'
         })
         .when('/route2/:param1/:param2', {
-            templateUrl: 'route.html',
+            templateUrl: 'route2.html',
             controller: 'RoutingController'
         })
         .otherwise({
-            redirectTo: '/'
+            redirectTo: '/route1/default-book/default-page'
         });
 }]);
 module.controller("RoutingController", function ($scope, $routeParams, $location) {
