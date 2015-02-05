@@ -39,7 +39,9 @@ In the above code, we have extracted the **URL** using ```$location.path()```. W
 
 We have then simply stored the **parameter**s of **URL** in ```$scope.firstParameter``` and ```$scope.secondParameter``` variables.
 
-But, this is a bad practice and perhaps an ugly way, since we have hardcoded the index in order to get the **parameters**.
+But, this is not a good practice and perhaps an ugly way, since we have hardcoded the index in order to get the parameters.
+
+And also when we have better solution to extract parameters so this way doesn't makes sense at all. But one benefit of **$location** service is that it can be used even when **$routeProvider** is not used.
 
 And also when we have better solution to extract **parameters** so this way doesn't makes sense at all.
 
@@ -49,7 +51,7 @@ Now, let's see that better solution:
 
 The **$routeParams** is a combination of $location's ```search()``` and ```path()```. We can get the route path using the **path()** method of the **$location** **service** whereas ```search()``` method of **$location** **service** returns an object of search part/query string of the url. The path **parameters** are extracted when the **$route** path is matched(```when('/route1/:param1/:param2', {})```).
 
-> Note : routeParams will only work when ngRoute module is installed. It provides routing and deep linking services and directives for angular apps.
+> Note : routeParams will only work when ngRoute module is installed. It provides routing and deep linking services and directives for angular apps. Another important thing to note is that **$routeParam** will only work when **$routeProvider** is used.
 
 Now, let's see a working demo:
 
