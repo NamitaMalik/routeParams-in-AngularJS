@@ -39,15 +39,15 @@ In the above code, we have extracted the **URL** using ```$location.path()```. W
 
 We have then simply stored the **parameter**s of **URL** in ```$scope.firstParameter``` and ```$scope.secondParameter``` variables.
 
-But, this is a bad practice and perhaps an ugly way, since we have hardcoded the index in order to get the parameters.
+But, this is a bad practice and perhaps an ugly way, since we have hardcoded the index in order to get the **parameters**.
 
-And also when we have better solution to extract parameters so this way doesn't makes sense at all.
+And also when we have better solution to extract **parameters** so this way doesn't makes sense at all.
 
 Now, let's see that better solution:
 
 **Using $routeParams service**: **$routeParams** **service** allows us to retrieve **route parameters**.
 
-The **$routeParams** is a combination of $location's ```search()``` and ```path()```. We can get the route path using the **path()** method of the **$location** **service** whereas ```search()``` method of **$location** **service** returns an object of search part of the url. The path parameters are extracted when the **$route** path is matched. If there is a parameter name collision, path params take precedence over search params.
+The **$routeParams** is a combination of $location's ```search()``` and ```path()```. We can get the route path using the **path()** method of the **$location** **service** whereas ```search()``` method of **$location** **service** returns an object of search part/query string of the url. The path **parameters** are extracted when the **$route** path is matched(```when('/route1/:param1/:param2', {})```).
 
 > Note : routeParams will only work when ngRoute module is installed. It provides routing and deep linking services and directives for angular apps.
 
@@ -76,7 +76,9 @@ module.controller("RoutingController", function ($scope, $routeParams, $location
 });
 ```
 
-In the above demo, we have injected **$routeParams** to our controller ```RoutingController``` and then we have simply done ```$routeParams.param1``` and ```$routeParams.param2``` to extract our first and second parameters respectively. **$routeParams** get updated only after a **route** change gets completed successfully.
+In the above demo, we have injected **$routeParams** to our controller ```RoutingController``` and then we have simply done ```$routeParams.param1``` and ```$routeParams.param2``` to extract our first and second **parameters** respectively. **$routeParams** get updated only after a **route** change gets completed successfully.
+
+> NOTE: If there is a parameter name collision, path params take precedence over search params. Suppose if param1 parameter is present in query string as well. e.g. /route1/default-book/default-page?param1=23&authore=namita then resultant $routeParams object will be having three properties only: {param1: "default-book", author: "namita", param2: "default-page"}. param1 is having value 'default-book' instead of 23.
 
 I have collated both the ways in a single js(route.js) which looks like:
 
