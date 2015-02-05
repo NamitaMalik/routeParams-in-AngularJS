@@ -18,12 +18,12 @@ module.config(['$routeProvider', function ($routeProvider) {
         });
 }]);
 module.controller("RoutingController", function ($scope, $routeParams, $location) {
-    //using $location service
+    // Using $location service
     var url = $location.path().split('/');
     $scope.firstParameter = url[2];
     $scope.secondParameter = url[3];
 
-    //using $routeParams
+    // Using $routeParams
     $scope.param1 = $routeParams.param1;
     $scope.param2 = $routeParams.param2;
 });
