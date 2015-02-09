@@ -1,6 +1,6 @@
-# Routing-in-AngularJS
+# routeParams-in-AngularJS
 
-Sometimes we encounter a situation where we need **parameter**s of a **URL**. This can be achieved basically in 2 ways:
+Sometimes we encounter a situation where we need **parameters** of a **URL**. This can be achieved basically in 2 ways:
 
 1. Using **$location** **service**
 2. Using **$routeParams** **service**
@@ -35,15 +35,13 @@ module.controller("RoutingController", function ($scope, $routeParams, $location
 });
 ```
 
-In the above code, we have extracted the **URL** using ```$location.path()```. We have then split this path on the basis of separator ```/```. We know that ```split()``` method returns an array of strings split using the separator (```/``` in this case) and this array has been stored in a variable named as ```url```.
+In the above code, we have extracted the **URL** using ```$location.path()```. We have then split this path on the basis of separator ```/```. We know that ```split()``` method returns an array of strings, split using the separator (```/``` in this case) and this array has been stored in a variable named as ```url```.
 
-We have then simply stored the **parameter**s of **URL** in ```$scope.firstParameter``` and ```$scope.secondParameter``` variables.
+We have then simply stored the **parameters** of **URL** in ```$scope.firstParameter``` and ```$scope.secondParameter``` variables.
 
-But, this is not a good practice and perhaps an ugly way, since we have hardcoded the index in order to get the parameters.
+But, this is not a good practice and perhaps an ugly way, since we have hardcoded the index in order to get the parameters. But one benefit of **$location** service is that it can be used even when **$routeProvider** is not used.
 
-And also when we have better solution to extract parameters so this way doesn't makes sense at all. But one benefit of **$location** service is that it can be used even when **$routeProvider** is not used.
-
-And also when we have better solution to extract **parameters** so this way doesn't makes sense at all.
+There is also one more way to extract **parameters**.
 
 Now, let's see that better solution:
 
