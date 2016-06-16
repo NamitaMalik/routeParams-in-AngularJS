@@ -1,5 +1,3 @@
-# routeParams-in-AngularJS
-
 Sometimes we encounter a situation where we need **parameters** of a **URL**. This can be achieved basically in 2 ways:
 
 1. Using **$location** **service**
