@@ -121,6 +121,14 @@ For much clearer understanding, I have shown these **parameters** on our **HTML*
 <label>Second Parameter</label> {{param2}}
 ```
 
-You can have a look at the full working source code [here](https://github.com/NamitaMalik/routeParams-in-AngularJS).
-
 It is important to note that there are many ways of doing one thing, it all depends on the requirements of the project. :)
+
+Follow Me
+---
+[Github](https://github.com/NamitaMalik)
+
+[Twitter](https://twitter.com/namita13_04)
+
+[LinkedIn](https://in.linkedin.com/in/namita-malik-a7885b23)
+
+[More Blogs By Me](https://namitamalik.github.io/)
