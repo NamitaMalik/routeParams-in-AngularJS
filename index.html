@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>$routeParams in AngularJS by NamitaMalik</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">$routeParams in AngularJS</h1>
+      <h2 class="project-tagline">This blog explains $route params functionality in AngularJS.</h2>
+      <a href="https://github.com/NamitaMalik/routeParams-in-AngularJS" class="btn">View on GitHub</a>
+      <a href="https://github.com/NamitaMalik/routeParams-in-AngularJS/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/NamitaMalik/routeParams-in-AngularJS/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="routeparams-in-angularjs" class="anchor" href="#routeparams-in-angularjs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>routeParams-in-AngularJS</h1>
+
+<p>Sometimes we encounter a situation where we need <strong>parameters</strong> of a <strong>URL</strong>. This can be achieved basically in 2 ways:</p>
+
+<ol>
+<li>Using <strong>$location</strong> <strong>service</strong>
+</li>
+<li>Using <strong>$routeParams</strong> <strong>service</strong>
+</li>
+</ol>
+
+<p><strong>Using $location service</strong>: We know that <strong>$location</strong> is a <strong>service</strong> in <strong>AngularJS</strong> which exposes the current <strong>URL</strong> in the address bar so that it can be observed or manipulated. Since <strong>$location</strong> exposes the <strong>URL</strong> therefore it is possible to extract the required <strong>parameters</strong> using <strong>$location</strong> <strong>service</strong>.</p>
+
+<p>We can use <strong>path()</strong> method of <strong>$location</strong> <strong>service</strong> for this purpose. When <code>path()</code> <strong>function</strong> is called without passing any parameter to it, it returns path of current url.</p>
+
+<p>Let's have a look at the following piece of code :</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> <span class="pl-c1">module</span> <span class="pl-k">=</span> <span class="pl-smi">angular</span>.<span class="pl-en">module</span>(<span class="pl-s"><span class="pl-pds">"</span>myApp<span class="pl-pds">"</span></span>, [<span class="pl-s"><span class="pl-pds">'</span>ngRoute<span class="pl-pds">'</span></span>]);
+<span class="pl-c1">module</span>.<span class="pl-en">config</span>([<span class="pl-s"><span class="pl-pds">'</span>$routeProvider<span class="pl-pds">'</span></span>, <span class="pl-k">function</span> (<span class="pl-smi">$routeProvider</span>) {
+    $routeProvider
+        .<span class="pl-en">when</span>(<span class="pl-s"><span class="pl-pds">'</span>/route1/:param1/:param2<span class="pl-pds">'</span></span>, {
+            templateUrl<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>route1.html<span class="pl-pds">'</span></span>,
+            controller<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>RoutingController<span class="pl-pds">'</span></span>
+        })
+        .<span class="pl-en">when</span>(<span class="pl-s"><span class="pl-pds">'</span>/route2/:param1/:param2<span class="pl-pds">'</span></span>, {
+            templateUrl<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>route2.html<span class="pl-pds">'</span></span>,
+            controller<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>RoutingController<span class="pl-pds">'</span></span>
+        })
+        .<span class="pl-en">otherwise</span>({
+            redirectTo<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>/route1/default-book/default-page<span class="pl-pds">'</span></span>
+        });
+}]);
+<span class="pl-c1">module</span>.<span class="pl-en">controller</span>(<span class="pl-s"><span class="pl-pds">"</span>RoutingController<span class="pl-pds">"</span></span>, <span class="pl-k">function</span> (<span class="pl-smi">$scope</span>, <span class="pl-smi">$routeParams</span>, <span class="pl-smi">$location</span>) {
+    <span class="pl-c">// Using $location service</span>
+    <span class="pl-k">var</span> url <span class="pl-k">=</span> <span class="pl-smi">$location</span>.<span class="pl-en">path</span>().<span class="pl-c1">split</span>(<span class="pl-s"><span class="pl-pds">'</span>/<span class="pl-pds">'</span></span>);
+    <span class="pl-smi">$scope</span>.<span class="pl-smi">firstParameter</span> <span class="pl-k">=</span> url[<span class="pl-c1">2</span>];
+    <span class="pl-smi">$scope</span>.<span class="pl-smi">secondParameter</span> <span class="pl-k">=</span> url[<span class="pl-c1">3</span>];
+});</pre></div>
+
+<p>In the above code, we have extracted the <strong>URL</strong> using <code>$location.path()</code>. We have then split this path on the basis of separator <code>/</code>. We know that <code>split()</code> method returns an array of strings, split using the separator (<code>/</code> in this case) and this array has been stored in a variable named as <code>url</code>.</p>
+
+<p>We have then simply stored the <strong>parameters</strong> of <strong>URL</strong> in <code>$scope.firstParameter</code> and <code>$scope.secondParameter</code> variables.</p>
+
+<p>But, this is not a good practice and perhaps an ugly way, since we have hardcoded the index in order to get the parameters. But one benefit of <strong>$location</strong> service is that it can be used even when <strong>$routeProvider</strong> is not used.</p>
+
+<p>There is also one more way to extract <strong>parameters</strong>.</p>
+
+<p>Now, let's see that better solution:</p>
+
+<p><strong>Using $routeParams service</strong>: <strong>$routeParams</strong> <strong>service</strong> allows us to retrieve <strong>route parameters</strong>.</p>
+
+<p>The <strong>$routeParams</strong> is a combination of $location's <code>search()</code> and <code>path()</code>. We can get the route path using the <strong>path()</strong> method of the <strong>$location</strong> <strong>service</strong> whereas <code>search()</code> method of <strong>$location</strong> <strong>service</strong> returns an object of search part/query string of the url. The path <strong>parameters</strong> are extracted when the <strong>$route</strong> path is matched(<code>when('/route1/:param1/:param2', {})</code>).</p>
+
+<blockquote>
+<p>Note : routeParams will only work when ngRoute module is installed. It provides routing and deep linking services and directives for angular apps. Another important thing to note is that <strong>$routeParam</strong> will only work when <strong>$routeProvider</strong> is used.</p>
+</blockquote>
+
+<p>Now, let's see a working demo:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> <span class="pl-c1">module</span> <span class="pl-k">=</span> <span class="pl-smi">angular</span>.<span class="pl-en">module</span>(<span class="pl-s"><span class="pl-pds">"</span>myApp<span class="pl-pds">"</span></span>, [<span class="pl-s"><span class="pl-pds">'</span>ngRoute<span class="pl-pds">'</span></span>]);
+<span class="pl-c1">module</span>.<span class="pl-en">config</span>([<span class="pl-s"><span class="pl-pds">'</span>$routeProvider<span class="pl-pds">'</span></span>, <span class="pl-k">function</span> (<span class="pl-smi">$routeProvider</span>) {
+    $routeProvider
+        .<span class="pl-en">when</span>(<span class="pl-s"><span class="pl-pds">'</span>/route1/:param1/:param2<span class="pl-pds">'</span></span>, {
+            templateUrl<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>route1.html<span class="pl-pds">'</span></span>,
+            controller<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>RoutingController<span class="pl-pds">'</span></span>
+        })
+        .<span class="pl-en">when</span>(<span class="pl-s"><span class="pl-pds">'</span>/route2/:param1/:param2<span class="pl-pds">'</span></span>, {
+            templateUrl<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>route2.html<span class="pl-pds">'</span></span>,
+            controller<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>RoutingController<span class="pl-pds">'</span></span>
+        })
+        .<span class="pl-en">otherwise</span>({
+            redirectTo<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>/route1/default-book/default-page<span class="pl-pds">'</span></span>
+        });
+}]);
+<span class="pl-c1">module</span>.<span class="pl-en">controller</span>(<span class="pl-s"><span class="pl-pds">"</span>RoutingController<span class="pl-pds">"</span></span>, <span class="pl-k">function</span> (<span class="pl-smi">$scope</span>, <span class="pl-smi">$routeParams</span>, <span class="pl-smi">$location</span>) {
+    <span class="pl-c">// Using $routeParams</span>
+    <span class="pl-smi">$scope</span>.<span class="pl-smi">param1</span> <span class="pl-k">=</span> <span class="pl-smi">$routeParams</span>.<span class="pl-smi">param1</span>;
+    <span class="pl-smi">$scope</span>.<span class="pl-smi">param2</span> <span class="pl-k">=</span> <span class="pl-smi">$routeParams</span>.<span class="pl-smi">param2</span>;
+});</pre></div>
+
+<p>In the above demo, we have injected <strong>$routeParams</strong> to our controller <code>RoutingController</code> and then we have simply done <code>$routeParams.param1</code> and <code>$routeParams.param2</code> to extract our first and second <strong>parameters</strong> respectively. <strong>$routeParams</strong> get updated only after a <strong>route</strong> change gets completed successfully.</p>
+
+<blockquote>
+<p>NOTE: If there is a parameter name collision, path params take precedence over search params. Suppose if param1 parameter is present in query string as well. e.g. /route1/default-book/default-page?param1=23&amp;authore=namita then resultant $routeParams object will be having three properties only: {param1: "default-book", author: "namita", param2: "default-page"}. param1 is having value 'default-book' instead of 23.</p>
+</blockquote>
+
+<p>I have collated both the ways in a single js(route.js) which looks like:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> <span class="pl-c1">module</span> <span class="pl-k">=</span> <span class="pl-smi">angular</span>.<span class="pl-en">module</span>(<span class="pl-s"><span class="pl-pds">"</span>myApp<span class="pl-pds">"</span></span>, [<span class="pl-s"><span class="pl-pds">'</span>ngRoute<span class="pl-pds">'</span></span>]);
+<span class="pl-c1">module</span>.<span class="pl-en">config</span>([<span class="pl-s"><span class="pl-pds">'</span>$routeProvider<span class="pl-pds">'</span></span>, <span class="pl-k">function</span> (<span class="pl-smi">$routeProvider</span>) {
+    $routeProvider
+        .<span class="pl-en">when</span>(<span class="pl-s"><span class="pl-pds">'</span>/route1/:param1/:param2<span class="pl-pds">'</span></span>, {
+            templateUrl<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>route1.html<span class="pl-pds">'</span></span>,
+            controller<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>RoutingController<span class="pl-pds">'</span></span>
+        })
+        .<span class="pl-en">when</span>(<span class="pl-s"><span class="pl-pds">'</span>/route2/:param1/:param2<span class="pl-pds">'</span></span>, {
+            templateUrl<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>route2.html<span class="pl-pds">'</span></span>,
+            controller<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>RoutingController<span class="pl-pds">'</span></span>
+        })
+        .<span class="pl-en">otherwise</span>({
+            redirectTo<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>/route1/default-book/default-page<span class="pl-pds">'</span></span>
+        });
+}]);
+<span class="pl-c1">module</span>.<span class="pl-en">controller</span>(<span class="pl-s"><span class="pl-pds">"</span>RoutingController<span class="pl-pds">"</span></span>, <span class="pl-k">function</span> (<span class="pl-smi">$scope</span>, <span class="pl-smi">$routeParams</span>, <span class="pl-smi">$location</span>) {
+    <span class="pl-c">// Using $location service</span>
+    <span class="pl-k">var</span> url <span class="pl-k">=</span> <span class="pl-smi">$location</span>.<span class="pl-en">path</span>().<span class="pl-c1">split</span>(<span class="pl-s"><span class="pl-pds">'</span>/<span class="pl-pds">'</span></span>);
+    <span class="pl-smi">$scope</span>.<span class="pl-smi">firstParameter</span> <span class="pl-k">=</span> url[<span class="pl-c1">2</span>];
+    <span class="pl-smi">$scope</span>.<span class="pl-smi">secondParameter</span> <span class="pl-k">=</span> url[<span class="pl-c1">3</span>];
+    <span class="pl-c">// Using $routeParams</span>
+    <span class="pl-smi">$scope</span>.<span class="pl-smi">param1</span> <span class="pl-k">=</span> <span class="pl-smi">$routeParams</span>.<span class="pl-smi">param1</span>;
+    <span class="pl-smi">$scope</span>.<span class="pl-smi">param2</span> <span class="pl-k">=</span> <span class="pl-smi">$routeParams</span>.<span class="pl-smi">param2</span>;
+});</pre></div>
+
+<p>For much clearer understanding, I have shown these <strong>parameters</strong> on our <strong>HTML</strong>. This is a small <strong>HTML</strong> code:</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">h1</span>&gt;Using $location Service&lt;/<span class="pl-ent">h1</span>&gt;
+&lt;<span class="pl-ent">label</span>&gt;First Parameter: &lt;/<span class="pl-ent">label</span>&gt; {{firstParameter}} &lt;<span class="pl-ent">br</span>/&gt; &lt;<span class="pl-ent">br</span>/&gt;
+&lt;<span class="pl-ent">label</span>&gt;Second Parameter: &lt;/<span class="pl-ent">label</span>&gt; {{secondParameter}} &lt;<span class="pl-ent">br</span>/&gt; &lt;<span class="pl-ent">br</span>/&gt;
+&lt;<span class="pl-ent">hr</span>/&gt;
+&lt;<span class="pl-ent">h1</span>&gt;Using $routeParams&lt;/<span class="pl-ent">h1</span>&gt;
+&lt;<span class="pl-ent">label</span>&gt;First Parameter: &lt;/<span class="pl-ent">label</span>&gt;{{param1}} &lt;<span class="pl-ent">br</span>/&gt; &lt;<span class="pl-ent">br</span>/&gt;
+&lt;<span class="pl-ent">label</span>&gt;Second Parameter&lt;/<span class="pl-ent">label</span>&gt; {{param2}}</pre></div>
+
+<p>It is important to note that there are many ways of doing one thing, it all depends on the requirements of the project. :)</p>
+
+<h2>
+<a id="follow-me" class="anchor" href="#follow-me" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Follow Me</h2>
+
+<p><a href="https://github.com/NamitaMalik">Github</a></p>
+
+<p><a href="https://twitter.com/namita13_04">Twitter</a></p>
+
+<p><a href="https://in.linkedin.com/in/namita-malik-a7885b23">LinkedIn</a></p>
+
+<p><a href="https://namitamalik.github.io/">More Blogs By Me</a></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/NamitaMalik/routeParams-in-AngularJS">$routeParams in AngularJS</a> is maintained by <a href="https://github.com/NamitaMalik">NamitaMalik</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
